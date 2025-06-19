@@ -26,7 +26,7 @@ It is recommended to use a virtual environment for this project:
 ```
 python -m venv .venv
 source .venv/bin/activate           # On Linux
-venv\Scripts\activate               # On windows
+.venv\Scripts\activate               # On windows
 pip install -r requirements.txt     # requirments.txt in docs folder
 ```
 
