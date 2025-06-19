@@ -1,0 +1,43 @@
+# Bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac/Linux system files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# pytest cache
+.pytest_cache/
+.cache/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# dotenv / secrets
+.env
+
+# My personal notes
+NOTES.md
