@@ -1,3 +1,20 @@
+"""
+PROBLEM
+
+Implement a function called convert that expects a str in any of the 12-hour formats below and returns the corresponding str in 24-hour format (i.e., 9:00 to 17:00). Expect that AM and PM will be capitalized (with no periods therein) and that there will be a space before each. Assume that these times are representative of actual times, not necessarily 9:00 AM and 5:00 PM specifically Take input in of of the following form:
+
+1.  9:00 AM to 5:00 PM
+2.  9 AM to 5 PM
+3.  9:00 AM to 5 PM
+4.  9 AM to 5:00 PM
+    
+Raise a ValueError instead if the input to convert is not in either of those formats or if either time is invalid (e.g., 12:60 AM, 13:00 PM, etc.). But do not assume that someone's hours will start ante meridiem and end post meridiem; someone might work late and even long hours (e.g., 5:00 PM to 9:00 AM).
+
+Structure working.py as follows, wherein you're welcome to modify main and/or implement other functions as you see fit, but you may not import any other libraries. You're welcome, but not required, to use re and/or sys.
+"""
+
+
+
 import re
 
 
@@ -6,17 +23,6 @@ def main():
 
 
 def convert(s):
-    """
-    Converts working hours taken as input in 12 hour format into 24 hour format.
-    
-    Accepts input of the following styles:
-        9:00 AM to 5:00 PM
-        9 AM to 5 PM
-        9:00 AM to 5 PM
-        9 AM to 5:00 PM
-
-    Returns output by converting these inputs into 24 hrs format
-    """
 
     if matches := re.search(r"^(?P<s_hr>\d\d?)(?P<s_min>:\d\d)? (?P<s_time>[AP]M) to (?P<e_hr>\d\d?)(?P<e_min>:\d\d)? (?P<e_time>[AP]M)$", s):
 
@@ -28,6 +34,7 @@ def convert(s):
             start_mins = int(matches.group("s_min").strip(":"))
         else:
             start_mins = 0
+        
         if matches.group("e_min"):
             end_mins = int(matches.group("e_min").strip(":"))
         else:
