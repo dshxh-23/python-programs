@@ -1,5 +1,5 @@
 import pytest
-from problem import numCells
+from problems.dominant_cells.soln import numCells
 
 
 def test_numCells():

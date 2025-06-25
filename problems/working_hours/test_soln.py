@@ -1,5 +1,5 @@
 import pytest
-from problem import convert
+from problems.working_hours.soln import convert
 
 # Testing for correct values:
 def test_convert_type1():

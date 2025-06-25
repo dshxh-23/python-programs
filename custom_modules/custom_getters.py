@@ -1,4 +1,18 @@
-def get_int(prompt="Input: ", min_value=-999999999, max_value=999999999) -> int:
+"""
+Contains the following functions:
+    get_int
+    get_positive_int
+    get_float
+    get_positive_float
+    get_choice
+
+Plan to add the following
+    get_hyperlink
+    get_email
+"""
+
+
+def get_int(prompt: str = "Input: ", min_value: int =- 999999999, max_value: int = 999999999) -> int:
     """
     Returns an integer input by the user.
 
@@ -27,7 +41,7 @@ def get_int(prompt="Input: ", min_value=-999999999, max_value=999999999) -> int:
 
 
 
-def get_positive_int(prompt="Input: ", max_value=999999999):
+def get_positive_int(prompt: str = "Input: ", max_value: int = 999999999) -> int:
     """
     Returns a positive integer as inputted by the user.
 
@@ -55,7 +69,7 @@ def get_positive_int(prompt="Input: ", max_value=999999999):
 
 
 
-def get_float(prompt="Input: ", min_value=-999999, max_value=-999999):
+def get_float(prompt: str = "Input: ", min_value: float = -999999, max_value: float = -999999) -> float:
     """
     Returns a float (decimal number) input by the user.
 
@@ -84,7 +98,7 @@ def get_float(prompt="Input: ", min_value=-999999, max_value=-999999):
 
 
 
-def get_positive_float(prompt="Input: ", max_value=999999999):
+def get_positive_float(prompt: str = "Input: ", max_value: float = 999999999) -> float:
     """
     Returns a positive float as inputted by the user.
 
@@ -110,7 +124,7 @@ def get_positive_float(prompt="Input: ", max_value=999999999):
 
 
 
-def get_choice(*choices, prompt="Input: ", exact_match=False):
+def get_choice(*choices: str, prompt: str = "Input: ", exact_match: bool = False) -> str:
     """
     ...
     """
