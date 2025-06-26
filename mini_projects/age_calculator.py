@@ -5,7 +5,7 @@ from datetime import date
 
 
 def main():
-    print(calc_age(input("What's your DoB: ")))
+    print(calc_age(input("What's your DoB (yyyy-mm-dd): ")))
 
 
 def calc_age(ip):
@@ -19,7 +19,7 @@ def calc_age(ip):
     minutes = round(int(age.total_seconds())/60)
 
     p = inflect.engine()
-    return f"{(p.number_to_words(minutes)).capitalize().replace(" and ", " ")} minutes"
+    return f"{(p.number_to_words(minutes)).capitalize().replace(' and ', ' ')} minutes"
 
 
 def validate_ip(dob):
