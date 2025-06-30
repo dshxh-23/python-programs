@@ -1,5 +1,16 @@
 import tkinter as tk
 
+def focus_in(e):
+    e.widget.config(bg = "grey")
+
+def focus_out(e):
+    e.widget.config(bg = "light grey")
+
+
+def clear_entries():
+    en_num1.delete(0, tk.END)
+    en_num2.delete(0, tk.END)
+
 def calculate(e=None):
     num1 = float(en_num1.get())
     num2 = float(en_num2.get())
@@ -22,12 +33,10 @@ def calculate(e=None):
             if num2 != 0:
                 lbox_res.insert(tk.END, f"{num1} / {num2} = {(num1/num2):.2f}")
             else:
-                lbox_res.insert(tk.END, f"Division by zero not possible!")
-
+                lbox_res.insert(tk.END, "Division by zero not possible!")
 
         # Clearing entries
-        en_num1.delete(0, tk.END)
-        en_num2.delete(0, tk.END)
+        clear_entries()        
         
 
 root = tk.Tk()
@@ -56,10 +65,13 @@ lbl_num2.grid(row=1, column=0, padx=(0,10))
 # Creating entrys
 en_num1 = tk.Entry(frame1, background="light grey")
 en_num1.grid(row=0, column=1)
+en_num1.bind("<FocusIn>", focus_in)
+en_num1.bind("<FocusOut>", focus_out)
 
 en_num2 = tk.Entry(frame1, background="light grey")
 en_num2.grid(row=1, column=1)
-
+en_num2.bind("<FocusIn>", focus_in)
+en_num2.bind("<FocusOut>", focus_out)
 
 #-----------------------END OF FRAME 1-----------------------#
 
@@ -95,9 +107,11 @@ frame3.pack(pady=(20, 0))
 
 
 # Creating the calculate button
-btn_calc = tk.Button(frame3,text='Calculate', background="grey", command=calculate, width=10, height=3)
+btn_calc = tk.Button(frame3,text='Calculate', background="light grey", command=calculate, width=10, height=3)
 btn_calc.grid(row=0, column=0, padx=(0, 10))
 btn_calc.bind("<Return>", calculate)
+btn_calc.bind("<FocusIn>", focus_in)
+btn_calc.bind("<FocusOut>", focus_out)
 
 # Creating result label
 lbox_res = tk.Listbox(frame3, background="light grey")

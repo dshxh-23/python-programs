@@ -32,6 +32,9 @@ Thumbs.db
 .pytest_cache/
 .cache/
 
+ruff cache
+.ruff_cache
+
 # Build and distribution
 build/
 dist/
