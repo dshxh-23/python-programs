@@ -1,41 +1,48 @@
 import sys
 import random
+import re
+
+
+def get_valid_name(prompt):
+    pattern = re.compile(r'^[A-Za-z0-9 ]+$')
+    while True:
+        name = input(prompt).strip()
+        if name and pattern.match(name):
+            return name
+        print("Name is not valid")
 
 
 def main():
-
-    # boundry shots
-    boundry_shots = ["sweep", "slog sweep", "pull", "cover drive", "helicopter", "lofted drive", "scoop"]
-    wicket_balls = ["googly", "carrom", "off-cutter", "leg-cutter", "top-spin", "leg-spin", "reverse-swing", "knuckle", "slower-one"]
-    
+   
     # team names
-    team_names = [input(f"Name of Team {i+1}: ") for i in range(2)]
+    team_names = [get_valid_name(f"Name of Team {i+1}: ") for i in range(2)]
     
-    # names of all players
-    players_per_team = int(input("Players per team: "))
-    all_players = []
-    for t in range(2):
-        print(f"Enter player names for {team_names[t]}:")
-        players = [input(f"Player {i+1}: ") for i in range(players_per_team)]
-        all_players.append(players)
+    # number of players per team
+    while True:
+        try:
+            players_per_team = int(input("Players per team: "))
+            if 3 <= players_per_team <= 11:
+                break
+            else:
+                print("Please enter a number of players between 3 and 11 (inclusive).")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 
     # scorcards and totals for both teams
     scorecards = []
     totals = []
 
-
     for i in range(2):
-
         # target is only for 2nd innings
         target = totals[0] if i == 1 else None
 
         # getting all results after team has played their innings
-        scorecard, total, chased = play_innings(team_names[i], all_players[i], boundry_shots, wicket_balls, target)
+        scorecard, total, chased = play_innings(team_names[i], players_per_team, target)
         
         # appending current team's scorecard and total to scorecards and totals (for match summary)
         scorecards.append(scorecard)
         totals.append(total)
-
+        
         # writing scorcard in a txt file (<team-name>_scorecard.txt)
         write_scorecard(f"{team_names[i]}_scorecard.txt", team_names[i], scorecard, total)
         if chased:
@@ -44,7 +51,7 @@ def main():
 
     # Checking the result
     winner = team_names[totals.index(max(totals))] if totals[0] != totals[1] else "Tie"
-
+    
     # Writing the match summary
     with open("match_summary.txt", 'w') as f:
         f.write(f"{team_names[0]}: {totals[0]}\n")
@@ -54,14 +61,19 @@ def main():
     print(f"WINNER: {winner}")
 
 
-def play_innings(team_name, player_names, boundry_shots, wicket_balls, target=None):
+def play_innings(team_name, players_per_team, target=None):
+    boundry_shots = ["sweep", "slog sweep", "pull", "cover drive", "helicopter", "lofted drive", "scoop"]
+    wicket_balls = ["googly", "carrom", "off-cutter", "leg-cutter", "top-spin", "leg-spin", "reverse-swing", "knuckle", "slower-one"]
+    run_balls = ["front-foot punch", "backfoot punch", "late cut", "upper-cut"]
+    dot_balls = ["front-foot defence", "beaten", "back-foot defence"]
     print(f"\n{team_name} is batting!")
     scorecard = []
     total_runs = 0
     chased = False
 
     # play innings for each player
-    for player in player_names:
+    for player_num in range(players_per_team):
+        player = get_valid_name(f"Enter name for Player {player_num+1} of {team_name}: ")
         runs = 0
         balls = 0
         shots = []
@@ -83,10 +95,13 @@ def play_innings(team_name, player_names, boundry_shots, wicket_balls, target=No
                 runs += result
                 if result == 4 or result == 6:
                     shot = random.choice(boundry_shots)
-                    print(f"{player} hits a {result}! Shot: {shot}")
                     shots.append(f"{result} ({shot})")
-                else:
-                    shots.append(str(result))
+                elif result in [1, 2, 3]:
+                    shot = random.choice(run_balls)
+                    shots.append(f"{result} ({shot})")
+                elif result == 0:
+                    shot = random.choice(dot_balls)
+                    shots.append(f"0 ({shot})")
 
             # check if team chased the target
             if target is not None and (total_runs + runs) > target:
@@ -95,10 +110,14 @@ def play_innings(team_name, player_names, boundry_shots, wicket_balls, target=No
         scorecard.append({'name': player, 'runs': runs, 'balls': balls, 'shots': shots})
         total_runs += runs
 
+        # Display all balls played and shots offered for this player
+        for ball_no, shot in enumerate(shots, 1):
+            print(f"  Ball {ball_no}: {shot}")
+        print()
+
         # game over if chase was successful
         if chased:
             break
-    
     print(f"Total runs for {team_name}: {total_runs}\n")
     return scorecard, total_runs, chased
 
